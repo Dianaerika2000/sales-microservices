@@ -7,6 +7,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { SalesModule } from './sales/sales.module';
 import { SalesDetailsModule } from './sales-details/sales-details.module';
 import { RolModule } from './rol/rol.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -35,7 +36,8 @@ import { RolModule } from './rol/rol.module';
   CustomerModule,
   SalesModule,
   SalesDetailsModule,
-  RolModule
+  RolModule,
+  UserModule
   ],
   controllers: [AppController],
   providers: [AppService],
