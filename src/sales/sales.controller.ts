@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { SalesService } from './sales.service';
 import { CreateSaleDto } from './dto/create-sale.dto';
 import { UpdateSaleDto } from './dto/update-sale.dto';
+import { SaleDto } from './dto/create-sale-detail.dto';
 
 @Controller('sales')
 export class SalesController {
@@ -12,6 +13,11 @@ export class SalesController {
     return this.salesService.createSale(createSaleDto);
   }
 
+  @Post('/register')
+  createSaleWithDetail(@Body() createSaleDto: SaleDto) {
+    return this.salesService.createSaleWithDetail(createSaleDto);
+  }
+  
   @Get()
   findAll() {
     return this.salesService.getAllSales();

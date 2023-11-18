@@ -27,7 +27,7 @@ export class CustomerService {
     if (!customer) {
       throw new Error(`Customer with ID ${id} not found`);
     }
-    
+
     return customer;
   }
 
@@ -44,8 +44,8 @@ export class CustomerService {
     return await this.customerRepository.save(customer);
   }
 
-  async remove(id: number) {
-    const customer = await this.customerRepository.findOneBy({ id });
-    return await this.customerRepository.delete(customer);
-  }
+  // async remove(id: number) {
+  //   const customer = await this.customerRepository.findOneBy({ id });
+  //   return await this.customerRepository.delete(id);
+  // }
 }

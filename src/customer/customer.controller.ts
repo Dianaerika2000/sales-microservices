@@ -38,8 +38,8 @@ export class CustomerController {
     return this.customerService.update(+id, updateCustomerDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.customerService.remove(+id);
-  }
+  // @Delete(':id')
+  // remove(@Param('id') id: string) {
+  //   return this.customerService.remove(+id);
+  // }
 }

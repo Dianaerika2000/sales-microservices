@@ -5,6 +5,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Sale } from './entities/sale.entity';
 import { Repository } from 'typeorm';
 import { CustomerService } from 'src/customer/customer.service';
+import { SaleDto } from './dto/create-sale-detail.dto';
+import { SalesDetailsService } from 'src/sales-details/sales-details.service';
 
 @Injectable()
 export class SalesService {
@@ -12,6 +14,7 @@ export class SalesService {
     @InjectRepository(Sale)
     private saleRepository: Repository<Sale>,
     private customerService: CustomerService,
+    private salesDetailService: SalesDetailsService,
   ) {}
 
   async createSale(createSaleDto: CreateSaleDto) {
@@ -25,6 +28,26 @@ export class SalesService {
     const sale = this.saleRepository.create({
       ...saleData,
       customer,
+    });
+
+    return await this.saleRepository.save(sale);
+  }
+
+  async createSaleWithDetail(createSaleDto: SaleDto) {
+    const { customerId, details, ...saleData } = createSaleDto;
+
+    const customer = await this.customerService.findOne(customerId);
+
+    const salesDetailPromises = details.map((detail) => {
+      return this.salesDetailService.create(detail);
+    });
+
+    const salesDetail = await Promise.all(salesDetailPromises);
+
+    const sale = this.saleRepository.create({
+      ...saleData,
+      customer,
+      saleDetail: salesDetail,
     });
 
     return await this.saleRepository.save(sale);
