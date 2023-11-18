@@ -12,7 +12,7 @@ export class Customer {
   @OneToMany(
     () => Sale, 
     sale => sale.customer,
-    { cascade: true, eager: true }
+    { cascade: true }
   )
   sales: Sale[];
 }

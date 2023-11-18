@@ -17,7 +17,8 @@ export class Sale {
 
   @ManyToOne(
     () => Customer,
-    customer => customer.sales
+    customer => customer.sales,
+    { eager: true }
   )
   customer: Customer;
 }
