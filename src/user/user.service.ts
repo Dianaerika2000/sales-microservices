@@ -1,10 +1,11 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { RolService } from 'src/rol/rol.service';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
@@ -15,11 +16,16 @@ export class UserService {
   ) {}
 
   async create(createUserDto: CreateUserDto) {
-    const { rolId, ...userData } = createUserDto;
+    const { rolId, email, password, ...userData } = createUserDto;
     const rol = await this.rolService.findOne(rolId);
+    
+    const userExists = await this.userRepository.findOneBy({ email });
+    if (userExists) throw new BadRequestException(`User with email ${email} already exists`);
 
     const user = this.userRepository.create({
       ...userData,
+      email,
+      password: await bcrypt.hash(password, 10),
       rol,
     });
 
@@ -35,6 +41,16 @@ export class UserService {
 
     if (!user) {
       throw new NotFoundException(`User with ID ${id} not found`);
+    }
+
+    return user;
+  }
+
+  async findOneByEmail(email: string) {
+    const user = await this.userRepository.findOneBy({ email });
+
+    if (!user) {
+      throw new NotFoundException(`User with email ${email} not found`);
     }
 
     return user;

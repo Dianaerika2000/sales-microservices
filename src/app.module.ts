@@ -8,6 +8,7 @@ import { SalesModule } from './sales/sales.module';
 import { SalesDetailsModule } from './sales-details/sales-details.module';
 import { RolModule } from './rol/rol.module';
 import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -37,7 +38,8 @@ import { UserModule } from './user/user.module';
   SalesModule,
   SalesDetailsModule,
   RolModule,
-  UserModule
+  UserModule,
+  AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],

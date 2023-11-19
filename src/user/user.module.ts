@@ -12,5 +12,6 @@ import { RolModule } from 'src/rol/rol.module';
   ],
   controllers: [UserController],
   providers: [UserService],
+  exports: [UserService],
 })
 export class UserModule {}
