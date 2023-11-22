@@ -15,7 +15,7 @@ export class SalesService {
     private saleRepository: Repository<Sale>,
     private customerService: CustomerService,
     private salesDetailService: SalesDetailsService,
-  ) {}
+  ) { }
 
   async createSale(createSaleDto: CreateSaleDto) {
     const { customerId, ...saleData } = createSaleDto;
@@ -77,7 +77,7 @@ export class SalesService {
       throw new Error(`Customer with ID ${customerId} not found`);
     }
 
-    const sale = this.saleRepository.update( id, {
+    const sale = this.saleRepository.update(id, {
       ...saleData,
       customer,
     });
@@ -86,7 +86,35 @@ export class SalesService {
   }
 
   async deleteSale(id: number) {
-    const sale = await this.getSaleById(id); 
+    const sale = await this.getSaleById(id);
     await this.saleRepository.remove(sale);
+  }
+
+  async getVolumenSales(dateStart: Date, dateEnd: Date) {
+    const periodSales = await this.saleRepository
+      .createQueryBuilder('sale')
+      .leftJoinAndSelect('sale.saleDetail', 'saleDetail')
+      .where('sale.created_at BETWEEN :dateStart AND :dateEnd', { dateStart, dateEnd })
+      .getMany();
+
+    const volumenVentas = periodSales.reduce((total, venta) => {
+      const cantidadProductosVendidos = venta.saleDetail.reduce(
+        (totalDetalle, salesDetail) => totalDetalle + salesDetail.quantity,
+        0
+      );
+
+      return total + cantidadProductosVendidos;
+    }, 0);
+
+    return volumenVentas;
+  }
+
+  async getRevenueSales(dateStart: Date, dateEnd: Date): Promise<number> {
+    const incomeInPeriod = await this.saleRepository
+      .createQueryBuilder('ingreso')
+      .where('ingreso.created_at BETWEEN :fechaInicio AND :fechaFin', { dateStart, dateEnd })
+      .getMany();
+
+    return incomeInPeriod.reduce((total, ingreso) => total + ingreso.total, 0);
   }
 }
