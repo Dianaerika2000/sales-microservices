@@ -54,7 +54,7 @@ export class SalesService {
   }
 
   async getAllSales(): Promise<Sale[]> {
-    return await this.saleRepository.find();
+    return await this.saleRepository.find({ order: { id: 'ASC' } });
   }
 
   async getSaleById(id: number) {
