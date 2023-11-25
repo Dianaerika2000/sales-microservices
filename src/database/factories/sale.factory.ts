@@ -1,5 +1,5 @@
 // sale.factory.ts
-
+/*
 import * as Faker from 'faker';
 import { define, factory } from 'typeorm-seeding';
 import { Sale } from '../../sales/entities/sale.entity';
@@ -30,7 +30,7 @@ define(Sale, (faker: typeof Faker, context: { customer: Customer }) => {
 
   return sale;
 });
-
+*/
 /* import * as Faker from 'faker';
 import { define, factory } from 'typeorm-seeding';
 import { Sale } from '../../sales/entities/sale.entity';

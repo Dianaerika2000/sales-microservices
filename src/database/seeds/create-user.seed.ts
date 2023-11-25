@@ -1,3 +1,4 @@
+/*
 import { User } from '../../user/entities/user.entity';
 import { Factory, Seeder } from 'typeorm-seeding';
 
@@ -7,3 +8,4 @@ export default class CreateUserSeed implements Seeder {
     await factory(User)().createMany(1);
   }
 }
+*/
