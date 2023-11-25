@@ -117,4 +117,20 @@ export class SalesService {
 
     return incomeInPeriod.reduce((total, ingreso) => total + ingreso.total, 0);
   }
+
+  async obtenerProductosMasVendidosConDetalle(): Promise<any[]> {
+    const productosMasVendidos = await this.saleRepository
+      .createQueryBuilder('sale')
+      .innerJoinAndSelect('sale.saleDetail', 'saleDetail')
+      .innerJoinAndSelect('sale.customer', 'customer') 
+      .groupBy('saleDetail.id')
+      .orderBy('SUM(saleDetail.quantity)', 'DESC')
+      .addSelect('SUM(saleDetail.quantity)', 'cantidadVendida')
+      .addSelect('COUNT(DISTINCT customer.id)', 'clientes')
+      .getRawMany();
+
+      console.log('result', productosMasVendidos);
+
+    return productosMasVendidos;
+  }
 }

@@ -3,7 +3,9 @@ import { SalesService } from './sales.service';
 import { CreateSaleDto } from './dto/create-sale.dto';
 import { UpdateSaleDto } from './dto/update-sale.dto';
 import { SaleDto } from './dto/create-sale-detail.dto';
+import { ApiTags, ApiQuery } from '@nestjs/swagger/dist';
 
+@ApiTags('Sales')
 @Controller('sales')
 export class SalesController {
   constructor(private readonly salesService: SalesService) { }
@@ -72,5 +74,10 @@ export class SalesController {
         message: error.message,
       };
     }
+  }
+
+  @Get('productos-mas-vendidos-con-detalle')
+  async obtenerProductosMasVendidosConDetalle(): Promise<any[]> {
+    return this.salesService.obtenerProductosMasVendidosConDetalle();
   }
 }
