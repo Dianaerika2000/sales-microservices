@@ -5,6 +5,8 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
+  app.setGlobalPrefix('/api');
+  
   const config = new DocumentBuilder()
     .setTitle('Sales API')
     .setDescription('Microservices API Sales')
@@ -22,6 +24,6 @@ async function bootstrap() {
       transform: true,
     }
   )); */
-  await app.listen(3000);
+  await app.listen(3000, "0.0.0.0");
 }
 bootstrap();

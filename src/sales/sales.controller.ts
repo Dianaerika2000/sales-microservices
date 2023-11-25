@@ -40,7 +40,7 @@ export class SalesController {
     return this.salesService.deleteSale(id);
   }
 
-  @Get('/volumen')
+  @Post('/volumen')
   async getVolumenVentas(
     @Query('dateStart') dateStart: Date,
     @Query('dateEnd') dateEnd: Date,
@@ -58,26 +58,22 @@ export class SalesController {
     }
   }
 
-  @Get('/ingresos')
-  async getRevenueSales(
-    @Query('fechaInicio') fechaInicio: Date,
-    @Query('fechaFin') fechaFin: Date,
-  ) {
-    try {
-      const ingresosVentas = await this.salesService.getRevenueSales(fechaInicio, fechaFin);
-      return {
-        ingresosVentas,
-      };
-    } catch (error) {
-      return {
-        error: 'Error al obtener los ingresos de ventas',
-        message: error.message,
-      };
-    }
-  }
-
-  @Get('productos-mas-vendidos-con-detalle')
+  @Post('/masvendidos')
   async obtenerProductosMasVendidosConDetalle(): Promise<any[]> {
     return this.salesService.obtenerProductosMasVendidosConDetalle();
+  }
+
+  @Post('/ingresosyears')
+  async getNewsletterRevenueOverTime(@Query('year') startYear: number): Promise<any[]> {
+    const results = await this.salesService.getNewsletterRevenueOverTime(startYear);
+
+    return results;
+  }
+
+  @Post('/ultimasventas')
+  async getUltimasVentas(): Promise<any[]> {
+    const results = await this.salesService.getUltimasVentas();
+
+    return results;
   }
 }
