@@ -10,7 +10,7 @@ import { Rol } from './entities/rol.entity';
   ],
   controllers: [RolController],
   providers: [RolService],
-  exports: [RolService]
+  exports: [RolService, TypeOrmModule]
 
 })
 export class RolModule {}

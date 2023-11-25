@@ -1,4 +1,4 @@
-import { Sale } from "src/sales/entities/sale.entity";
+import { Sale } from "../../sales/entities/sale.entity";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
@@ -14,6 +14,9 @@ export class SalesDetail {
 
   @Column()
   quantity: number;
+
+  @Column({ name: 'code_product', nullable: true })
+  codeProduct: string;
 
   @ManyToOne(
     () => Sale,
