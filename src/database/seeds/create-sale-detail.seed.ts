@@ -1,3 +1,4 @@
+/*
 import { DataSource } from 'typeorm';
 import { SalesDetail } from '../../sales-details/entities/sales-detail.entity';
 import { Sale } from '../../sales/entities/sale.entity';
@@ -22,3 +23,4 @@ export default class CreateSaleDetailSeed implements Seeder {
     }
   }
 }
+*/

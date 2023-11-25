@@ -1,3 +1,4 @@
+/*
 import * as Faker from 'faker';
 import { define, factory } from 'typeorm-seeding';
 import { User } from '../../user/entities/user.entity';
@@ -20,4 +21,4 @@ define(User, (faker: typeof Faker) => {
 
   return user;
 });
-
+*/

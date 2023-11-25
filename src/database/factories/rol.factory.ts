@@ -1,3 +1,4 @@
+/*
 import * as Faker from 'faker';
 import { define } from 'typeorm-seeding';
 import { Rol } from '../../rol/entities/rol.entity';
@@ -12,3 +13,4 @@ define(Rol, (faker: typeof Faker) => {
 
   return rol;
 });
+*/

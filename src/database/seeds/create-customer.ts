@@ -1,4 +1,4 @@
-
+/*
 import { ConnectionOptions, Factory, Seeder } from 'typeorm-seeding';
 import { Customer } from '../../customer/entities/customer.entity';
 
@@ -7,3 +7,4 @@ export default class CreateCustomerSeed implements Seeder {
     await factory(Customer)().createMany(50);  
   }
 }
+*/

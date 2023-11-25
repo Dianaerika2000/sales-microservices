@@ -1,3 +1,4 @@
+/*
 import { DataSource } from 'typeorm';
 import { Customer } from '../../customer/entities/customer.entity';
 import { Sale } from '../../sales/entities/sale.entity';
@@ -16,7 +17,7 @@ export default class CreateSaleSeed implements Seeder {
 
     if (existingCustomers.length) {
       // Crear varias ventas con detalles de venta asociados
-      const numberOfSales = 30; // Puedes ajustar según tus necesidades
+      const numberOfSales = 20; // Puedes ajustar según tus necesidades
       for (let i = 0; i < numberOfSales; i++) {
         const randomIndex = Math.floor(Math.random() * existingCustomers.length);
         const customer = existingCustomers[randomIndex];
@@ -47,4 +48,4 @@ export default class CreateSaleSeed implements Seeder {
     }
   }
 }
-
+*/
