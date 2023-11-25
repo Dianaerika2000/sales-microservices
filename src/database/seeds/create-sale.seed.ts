@@ -16,7 +16,7 @@ export default class CreateSaleSeed implements Seeder {
 
     if (existingCustomers.length) {
       // Crear varias ventas con detalles de venta asociados
-      const numberOfSales = 1000; // Puedes ajustar según tus necesidades
+      const numberOfSales = 30; // Puedes ajustar según tus necesidades
       for (let i = 0; i < numberOfSales; i++) {
         const randomIndex = Math.floor(Math.random() * existingCustomers.length);
         const customer = existingCustomers[randomIndex];
@@ -24,8 +24,8 @@ export default class CreateSaleSeed implements Seeder {
         // Crear una venta
         const sale = await factory(Sale)({ customer }).create();
 
-        // Generar un número aleatorio entre 1 y 10 para la cantidad de detalles de venta
-        const numberOfDetails = Math.floor(Math.random() * 10) + 1;
+        // Generar un número aleatorio entre 1 y 5 para la cantidad de detalles de venta
+        const numberOfDetails = Math.floor(Math.random() * 2) + 1;
         await factory(SalesDetail)({ sale }).createMany(numberOfDetails);
 
         // Recargar la venta desde la base de datos para asegurarse de tener las relaciones actualizadas

@@ -3,11 +3,11 @@ import { ConfigService } from "@nestjs/config";
 const configService = new ConfigService();
 
 module.exports = {
-  // type: 'postgres',
+  type: 'postgres',
   // host: 'localhost',
   // port: 5432,
   // username: 'postgres',
-  // password : 'postgres',
+  // password : 'toor',
   // database: 'db_sales',
   url: configService.get('DB_URL'),
   ssl: true,
