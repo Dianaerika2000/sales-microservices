@@ -109,12 +109,57 @@ export class SalesService {
     return volumenVentas;
   }
 
-  async getRevenueSales(dateStart: Date, dateEnd: Date): Promise<number> {
-    const incomeInPeriod = await this.saleRepository
-      .createQueryBuilder('ingreso')
-      .where('ingreso.created_at BETWEEN :fechaInicio AND :fechaFin', { dateStart, dateEnd })
-      .getMany();
+  async obtenerProductosMasVendidosConDetalle(): Promise<any[]> {
+    const productosMasVendidos = await this.saleRepository.query('SELECT sd.code_product AS producto_id, SUM(sd.quantity) AS cantidad_vendida, COUNT(DISTINCT s.customer_id) AS clientes_que_compraron FROM public.sale s INNER JOIN public.sales_detail sd ON s.id = sd."saleId" GROUP BY sd.code_product ORDER BY cantidad_vendida DESC;');
 
-    return incomeInPeriod.reduce((total, ingreso) => total + ingreso.total, 0);
+    return productosMasVendidos;
+  }
+
+  async getNewsletterRevenueOverTime(year: number): Promise<any[]> {
+    const query = `
+    SELECT
+      EXTRACT(YEAR FROM created_at) AS year,
+      EXTRACT(MONTH FROM created_at) AS month,
+      SUM(total) AS total_revenue
+    FROM
+      sale
+    WHERE
+      EXTRACT(YEAR FROM created_at) = $1
+    GROUP BY
+      EXTRACT(YEAR FROM created_at),
+      EXTRACT(MONTH FROM created_at)
+    ORDER BY
+      year DESC, month DESC;
+    `;
+
+    const results = await this.saleRepository.query(query, [year]);
+    console.log(results)
+    return results;
+  }
+
+  async getUltimasVentas(): Promise<any[]> {
+    const query = `
+    SELECT
+      s.id AS sale_id,
+      s.total AS total_comprado,
+      COUNT(sd.id) AS cantidad_items_comprados,
+      c.name AS nombre_cliente,
+      s.created_at AS fecha_venta
+    FROM
+      sale s
+    JOIN
+      customer c ON s.customer_id = c.id
+    JOIN
+      sales_detail sd ON s.id = sd."saleId"
+    GROUP BY
+      s.id, c.name, s.total, s.created_at
+    ORDER BY
+      s.created_at DESC
+    LIMIT
+      5;
+    `;
+
+    const results = await this.saleRepository.query(query);
+    return results;
   }
 }
