@@ -110,7 +110,15 @@ export class SalesService {
   }
 
   async obtenerProductosMasVendidosConDetalle(): Promise<any[]> {
-    const productosMasVendidos = await this.saleRepository.query('SELECT sd.code_product AS producto_id, SUM(sd.quantity) AS cantidad_vendida, COUNT(DISTINCT s.customer_id) AS clientes_que_compraron FROM public.sale s INNER JOIN public.sales_detail sd ON s.id = sd."saleId" GROUP BY sd.code_product ORDER BY cantidad_vendida DESC;');
+    const productosMasVendidos = await this.saleRepository.query(`
+      SELECT sd.code_product AS producto_id, 
+        SUM(sd.quantity) AS cantidad_vendida, 
+        COUNT(DISTINCT s.customer_id) AS clientes_que_compraron 
+      FROM public.sale s 
+      INNER JOIN public.sales_detail sd ON s.id = sd."saleId" 
+      GROUP BY sd.code_product 
+      ORDER BY cantidad_vendida DESC
+      LIMIT 10;`);
 
     return productosMasVendidos;
   }
