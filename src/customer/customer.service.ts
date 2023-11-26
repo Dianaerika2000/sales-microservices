@@ -44,8 +44,15 @@ export class CustomerService {
     return await this.customerRepository.save(customer);
   }
 
+  async getTotalCustomers() {
+    const result = this.customerRepository.query('SELECT COUNT(*) FROM customer');
+
+    return result;
+  }
+
   // async remove(id: number) {
   //   const customer = await this.customerRepository.findOneBy({ id });
   //   return await this.customerRepository.delete(id);
   // }
+
 }

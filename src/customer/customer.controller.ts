@@ -40,6 +40,11 @@ export class CustomerController {
     return this.customerService.update(+id, updateCustomerDto);
   }
 
+  @Post('/total-customers')
+  getTotalCustomers() {
+    return this.customerService.getTotalCustomers();
+  }
+
   // @Delete(':id')
   // remove(@Param('id') id: string) {
   //   return this.customerService.remove(+id);
