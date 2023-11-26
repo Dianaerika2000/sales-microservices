@@ -162,4 +162,12 @@ export class SalesService {
     const results = await this.saleRepository.query(query);
     return results;
   }
+
+  async getTotalIncome() {
+    const query = `SELECT SUM(total) AS total FROM sale`;
+
+    const results = await this.saleRepository.query(query);
+    
+    return results;
+  }
 }

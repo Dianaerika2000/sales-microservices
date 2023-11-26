@@ -76,4 +76,11 @@ export class SalesController {
 
     return results;
   }
+
+  @Post('/totalSales')
+  async getTotalIncome() {
+    const results = await this.salesService.getTotalIncome();
+
+    return results;
+  }
 }
