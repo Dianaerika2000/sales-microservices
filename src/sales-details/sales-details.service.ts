@@ -13,8 +13,12 @@ export class SalesDetailsService {
   ) {}
 
   async create(createSalesDetailDto: CreateSalesDetailDto) {
+    const { productId, ...data } = createSalesDetailDto;
     const salesDetail = this.salesDetailRepository.create(
-      createSalesDetailDto,
+      {
+        ...data,
+        codeProduct: productId ,
+      },
     );
 
     return await this.salesDetailRepository.save(salesDetail);

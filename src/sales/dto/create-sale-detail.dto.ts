@@ -1,9 +1,9 @@
 import { Type } from 'class-transformer';
-import { IsArray, IsNumber, ValidateNested } from 'class-validator';
+import { IsArray, IsNumber, IsString, ValidateNested } from 'class-validator';
 
 class salesDetailDto {
-  @IsNumber()
-  productId: number;
+  @IsString()
+  productId: string;
   
   @IsNumber()
   price: number;
