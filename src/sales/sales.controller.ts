@@ -103,7 +103,6 @@ export class SalesController {
       const products = await this.salesService.getProductsFromCSV(csvFilePath);
       
       const relatedProducts = products.filter(product => product.code === code);
-      console.log(relatedProducts)
       
       return { relatedProducts };
 
