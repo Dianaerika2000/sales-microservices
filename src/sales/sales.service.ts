@@ -7,6 +7,8 @@ import { Repository } from 'typeorm';
 import { CustomerService } from 'src/customer/customer.service';
 import { SaleDto } from './dto/create-sale-detail.dto';
 import { SalesDetailsService } from 'src/sales-details/sales-details.service';
+import * as fs from 'fs';
+import * as csvParser from 'csv-parser';
 
 @Injectable()
 export class SalesService {
@@ -177,5 +179,23 @@ export class SalesService {
     const results = await this.saleRepository.query(query);
     
     return results;
+  }
+
+  async getProductsFromCSV(filePath: string): Promise<any[]> {
+    const products: any[] = [];
+
+    return new Promise((resolve, reject) => {
+      fs.createReadStream(filePath)
+        .pipe(csvParser())
+        .on('data', (row) => {
+          products.push(row);
+        })
+        .on('end', () => {
+          resolve(products);
+        })
+        .on('error', (error) => {
+          reject(error);
+        });
+    });
   }
 }
