@@ -4,7 +4,7 @@ import { CreateSaleDto } from './dto/create-sale.dto';
 import { UpdateSaleDto } from './dto/update-sale.dto';
 import { SaleDto } from './dto/create-sale-detail.dto';
 import { ApiTags, ApiQuery } from '@nestjs/swagger/dist';
-import * as path from 'path';
+import { join } from 'path';
 
 @ApiTags('Sales')
 @Controller('sales')
@@ -85,13 +85,29 @@ export class SalesController {
     return results;
   }
 
-  @Get('related/:code')
-  async getRelatedProducts(@Param('code') code: string): Promise<any> {
-    const csvFilePath = path.resolve('./src', '..', 'data-related.csv');
-    const products = await this.salesService.getProductsFromCSV(csvFilePath);
+  // @Get('related/:code')
+  // async getRelatedProducts(@Param('code') code: string): Promise<any> {
+  //   const csvFilePath = path.resolve('./src', '..', 'data-related.csv');
+  //   const products = await this.salesService.getProductsFromCSV(csvFilePath);
     
-    const relatedProducts = products.filter(product => product.code === code);
+  //   const relatedProducts = products.filter(product => product.code === code);
 
-    return { relatedProducts };
+  //   return { relatedProducts };
+  // }
+
+  @Get('related/:code')
+  async getRelatedProducts2(@Param('code') code: string): Promise<any> {
+    const csvFilePath = join(__dirname, '..', '..', 'dataset_con_relaciones.csv');
+    
+    try {
+      const products = await this.salesService.getProductsFromCSV(csvFilePath);
+      
+      const relatedProducts = products.filter(product => product.code === code);
+      
+      return { relatedProducts };
+
+    } catch (error) {
+      console.log('Error: ', error.message);
+    }
   }
 }
